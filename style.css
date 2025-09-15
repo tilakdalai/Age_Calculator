@@ -1,0 +1,79 @@
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        line-height: 1.6;
+        background-color: rgb(163, 229, 236);
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+
+      .input-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        font-weight: bold;
+        color: #333;
+        margin-right: 10px;
+      }
+
+      .date-inputs {
+        margin-top: 10px;
+      }
+
+      .date-inputs label {
+        display: inline-block;
+        width: 50px;
+        font-weight: normal;
+      }
+
+      input[type="number"] {
+        padding: 8px;
+        border: 1px solid #ccc;
+        margin-right: 15px;
+        margin-bottom: 10px;
+        width: 80px;
+        font-size: 14px;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        margin: 10px 0;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      .result {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #e8f5e9;
+        border: 1px solid #4caf50;
+      }
+
+      .error {
+        color: red;
+        margin-top: 10px;
+        font-weight: bold;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .age-result {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+      }

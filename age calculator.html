@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
+    <title>Age Calculator</title>
+
+  </head>
+  <body>
+    <h1>Age Calculator</h1>
+
+    <form id="ageForm">
+      <div class="input-group">
+        <label>Enter your Date of Birth:</label>
+        <div class="date-inputs">
+          <label for="day">Day:</label>
+          <input
+            type="number"
+            id="day"
+            min="1"
+            max="31"
+            placeholder="DD"
+            required
+          />
+
+          <label for="month">Month:</label>
+          <input
+            type="number"
+            id="month"
+            min="1"
+            max="12"
+            placeholder="MM"
+            required
+          />
+
+          <label for="year">Year:</label>
+          <input
+            type="number"
+            id="year"
+            min="1900"
+            max="2024"
+            placeholder="YYYY"
+            required
+          />
+        </div>
+      </div>
+
+      <button type="submit">Calculate Age</button>
+    </form>
+
+    <div id="result" class="result hidden">
+      <h3>Your Age:</h3>
+      <div id="ageDisplay" class="age-result"></div>
+    </div>
+
+    <div id="error" class="error hidden"></div>
+
+    <script>
+      document
+        .getElementById("ageForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          calculateAge();
+        });
+
+      function calculateAge() {
+        // Get input values
+        const day = parseInt(document.getElementById("day").value);
+        const month = parseInt(document.getElementById("month").value);
+        const year = parseInt(document.getElementById("year").value);
+
+        // Hide previous results
+        document.getElementById("result").classList.add("hidden");
+        document.getElementById("error").classList.add("hidden");
+
+        // Validate inputs
+        if (!day || !month || !year) {
+          showError("Please fill in all fields.");
+          return;
+        }
+
+        if (day < 1 || day > 31) {
+          showError("Please enter a valid day (1-31).");
+          return;
+        }
+
+        if (month < 1 || month > 12) {
+          showError("Please enter a valid month (1-12).");
+          return;
+        }
+
+        if (year < 1900 || year > new Date().getFullYear()) {
+          showError("Please enter a valid year.");
+          return;
+        }
+
+        // Create birth date
+        const birthDate = new Date(year, month - 1, day);
+
+        // Check if the date is valid
+        if (
+          birthDate.getDate() !== day ||
+          birthDate.getMonth() !== month - 1 ||
+          birthDate.getFullYear() !== year
+        ) {
+          showError("Please enter a valid date.");
+          return;
+        }
+
+        const today = new Date();
+
+        // Check if birth date is in the future
+        if (birthDate > today) {
+          showError("Birth date cannot be in the future.");
+          return;
+        }
+
+        // Calculate age
+        let ageYears = today.getFullYear() - birthDate.getFullYear();
+        let ageMonths = today.getMonth() - birthDate.getMonth();
+        let ageDays = today.getDate() - birthDate.getDate();
+
+        // Adjust for negative days
+        if (ageDays < 0) {
+          ageMonths--;
+          const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+          ageDays += lastMonth.getDate();
+        }
+
+        // Adjust for negative months
+        if (ageMonths < 0) {
+          ageYears--;
+          ageMonths += 12;
+        }
+
+        // Display result
+        displayAge(ageYears, ageMonths, ageDays);
+      }
+
+      function displayAge(years, months, days) {
+        const ageDisplay = document.getElementById("ageDisplay");
+        ageDisplay.innerHTML = `${years} years, ${months} months, and ${days} days`;
+        document.getElementById("result").classList.remove("hidden");
+      }
+
+      function showError(message) {
+        const errorDiv = document.getElementById("error");
+        errorDiv.textContent = message;
+        errorDiv.classList.remove("hidden");
+      }
+
+      // Set current year as max for year input
+      document.getElementById("year").max = new Date().getFullYear();
+    </script>
+  </body>
+</html>
